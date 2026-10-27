@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en" data-ground="white" data-type="grotesk" data-caps="always" data-motion="on">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aakash Desai</title>
+<meta name="description" content="Aakash Desai — product manager &amp; engineer. Software, hardware, writing." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect x=%222%22 y=%222%22 width=%2212%22 height=%2212%22 fill=%22none%22 stroke=%22%2316140f%22 stroke-width=%222%22/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<script>
+  // Apply persisted prefs before paint to avoid flash.
+  try {
+    var s = JSON.parse(localStorage.getItem('aakash:portal') || '{}');
+    if (s.ground)    document.documentElement.dataset.ground    = s.ground;
+    if (s.type)      document.documentElement.dataset.type      = s.type;
+  } catch (e) {}
+</script>
+
+<style>
+  :root {
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --c1: #e8692e; --c2: #d2418a; --c3: #eab12e;  /* desert wildflower tricolor */
+  }
+
+  /* ── Typeface system ──────────────────────────────────── */
+  html[data-type="grotesk"] { --ff: 'Public Sans', system-ui, -apple-system, sans-serif; --ff-w: 500; --ff-wb: 700; --track: 0.26em; }
+  html[data-type="courier"] { --ff: 'Courier Prime', ui-monospace, Menlo, monospace;     --ff-w: 400; --ff-wb: 700; --track: 0.20em; }
+  html[data-type="plex"]    { --ff: 'IBM Plex Mono', ui-monospace, Menlo, monospace;      --ff-w: 500; --ff-wb: 600; --track: 0.22em; }
+
+  /* ── Ground polarity ──────────────────────────────────── */
+  html[data-ground="black"] {
+    --bg:  #0a0a0a;
+    --fg:  #ece9e1;
+    --dim: #797568;
+    --hair: rgba(236,233,225,0.12);
+  }
+  html[data-ground="white"] {
+    --bg:  #faf8f2;
+    --fg:  #16140f;
+    --dim: #847f73;
+    --hair: rgba(22,20,15,0.14);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--ff);
+    font-weight: var(--ff-w);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow: hidden;
+    transition: background 600ms var(--ease), color 600ms var(--ease);
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .stage {
+    position: relative;
+    height: 100dvh;
+    width: 100%;
+  }
+
+  /* ── Name · top-left ──────────────────────────────────── */
+  .signature {
+    position: absolute;
+    top: clamp(28px, 4.5vh, 54px);
+    left: clamp(28px, 4.5vw, 62px);
+    font-size: clamp(22px, 2.6vw, 34px);
+    font-weight: var(--ff-wb);
+    letter-spacing: 0.1em;
+    text-transform: lowercase;
+    white-space: nowrap;
+    color: var(--fg);
+    z-index: 5;
+    animation: fade 1400ms var(--ease) both;
+  }
+
+  /* ── Email · bottom-left ──────────────────────────────── */
+  .contact {
+    position: absolute;
+    bottom: clamp(26px, 4.5vh, 50px);
+    left: clamp(28px, 4.5vw, 62px);
+    font-size: 13px;
+    font-weight: var(--ff-w);
+    letter-spacing: 0.12em;
+    color: var(--dim);
+    z-index: 5;
+    transition: color 240ms var(--ease);
+    animation: fade 1400ms 200ms var(--ease) both;
+  }
+  .contact:hover { color: var(--fg); }
+
+  /* ── Place · bottom-right ─────────────────────────────── */
+  .stamp {
+    position: absolute;
+    bottom: clamp(26px, 4.5vh, 50px);
+    right: clamp(28px, 4.5vw, 62px);
+    font-size: 13px;
+    font-weight: var(--ff-w);
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+    color: var(--dim);
+    z-index: 5;
+    animation: fade 1400ms 200ms var(--ease) both;
+  }
+
+  /* ── Horizon line ─────────────────────────────────────── */
+  .horizon {
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    height: 1px;
+    background: var(--hair);
+    transform: scaleX(0);
+    transform-origin: center;
+    animation: drawline 1600ms 300ms var(--ease) both;
+  }
+
+  /* ── Marks row ────────────────────────────────────────── */
+  .marks {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(40px, 8vw, 120px);
+  }
+
+  .mark {
+    position: relative;
+    height: 180px;
+    width: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fg);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: rise 1100ms var(--ease) both;
+    transition: opacity 380ms var(--ease);
+  }
+  .mark:nth-child(2) { animation-delay: 460ms; }
+  .mark:nth-child(3) { animation-delay: 600ms; }
+  .mark:nth-child(4) { animation-delay: 740ms; }
+  .mark:nth-child(5) { animation-delay: 880ms; }
+
+  /* Focus one, recede the rest */
+  .marks:hover .mark { opacity: 0.26; }
+  .marks:hover .mark:hover { opacity: 1; }
+
+  .mark:focus-visible { outline: none; }
+  .mark:focus-visible .cap { opacity: 1; }
+  .mark:focus-visible .visual { transform: translateY(-3px); }
+
+  /* Caption */
+  .cap {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 26px;
+    white-space: nowrap;
+    font-size: 16px;
+    font-weight: var(--ff-wb);
+    letter-spacing: 0.2em;
+    text-transform: lowercase;
+    color: var(--fg);
+    opacity: 0;
+    transition: opacity 320ms var(--ease);
+    pointer-events: none;
+  }
+  html[data-caps="always"] .cap { opacity: 0.5; }
+  .mark:hover .cap { opacity: 1; }
+
+  .visual {
+    transition: transform 480ms var(--ease);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── 1 · Square (CV) — stepped tick ───────────────────── */
+  .glyph-square {
+    width: 96px;
+    height: 96px;
+    border: 2.5px solid var(--fg);
+    background: transparent;
+    animation: sqstep 4.4s steps(1, end) infinite;
+    transition: background 220ms steps(2, end);
+  }
+  .mark:hover .glyph-square { background: var(--fg); animation-play-state: paused; }
+
+  /* ── 2 · Stepped dot-grid (digital) ───────────────────── */
+  .grid-canvas { width: 120px; height: 120px; display: block; }
+
+  /* ── 3 · Vessel with stepping water (hardware) ────────── */
+  .glyph-vessel { width: 108px; height: 132px; display: block; overflow: visible; }
+  .glyph-vessel .vbody { fill: none; stroke: var(--fg); stroke-width: 2.5; transition: stroke-width 200ms steps(2,end); }
+  .glyph-vessel .vwater { fill: var(--c3); opacity: 0.40; transition: opacity 220ms steps(2,end); }
+  .glyph-vessel .vsurf  { fill: var(--c2); opacity: 0.85; }
+  .glyph-vessel .vlevel { animation: vlevel 6.6s steps(1, end) infinite; }
+  .glyph-vessel .vsurf  { animation: vripple 1.15s steps(1, end) infinite; }
+  .mark:hover .glyph-vessel .vwater { opacity: 0.66; }
+  .mark:hover .glyph-vessel .vbody  { stroke-width: 3.2; }
+  /* prank — tip & pour from the spout on hover */
+  .glyph-vessel .btip { transition: transform .3s steps(4, end); transform-origin: 60px 112px; }
+  .glyph-vessel .drop { fill: var(--fg); opacity: 0; }
+  .mark:hover .glyph-vessel .btip { transform: rotate(32deg); }
+  .mark:hover .glyph-vessel .vlevel { animation: none; transform: translateY(78px); transition: transform .5s steps(6, end); }
+  .mark:hover .glyph-vessel .vsurf  { animation: none; opacity: 0; }
+  .mark:hover .glyph-vessel .drop   { animation: splash var(--d, .7s) steps(5, end) infinite; animation-delay: var(--delay, 0s); }
+
+  /* ── 4 · Ellipsis (writing) — JS typing cadence ───────── */
+  .glyph-dots {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 96px;
+  }
+  .glyph-dots i {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--fg);
+    opacity: 0.15;
+    /* no transition — instant, stepped on/off */
+  }
+  .glyph-dots i.on { opacity: 1; }
+  .mark:hover .glyph-dots i { opacity: 1; }
+
+  /* prank — CV square collapses into vanishing rings */
+  .cvbox { position: relative; }
+  .cv-vanish { position: absolute; inset: 0; display: none; }
+  .cv-vanish span {
+    position: absolute; left: 50%; top: 50%; width: 96px; height: 96px;
+    margin-left: -48px; margin-top: -48px; border: 2px solid var(--fg);
+    border-radius: 50%; opacity: 0; animation: vanish 2.4s steps(7, end) infinite;
+  }
+  .cv-vanish span:nth-child(2) { animation-delay: .4s; }
+  .cv-vanish span:nth-child(3) { animation-delay: .8s; }
+  .cv-vanish span:nth-child(4) { animation-delay: 1.2s; }
+  .cv-vanish span:nth-child(5) { animation-delay: 1.6s; }
+  .cv-vanish span:nth-child(6) { animation-delay: 2.0s; }
+  .mark:hover .cvbox .glyph-square { opacity: 0; }
+  .mark:hover .cv-vanish { display: block; }
+
+  /* prank — ellipsis snaps to an exclamation point */
+  .bang { display: none; flex-direction: column; align-items: center; gap: 9px; height: 96px; justify-content: center; }
+  .bang .stem { width: 15px; height: 46px; border-radius: 7.5px; background: var(--fg); transform-origin: bottom center; animation: bangpop .3s steps(3, end); }
+  .bang .pt { width: 15px; height: 15px; border-radius: 50%; background: var(--fg); }
+  .mark:hover .glyph-dots { display: none; }
+  .mark:hover .bang { display: flex; }
+
+  /* ── Motion off ───────────────────────────────────────── */
+  html[data-motion="off"] .glyph-square,
+  html[data-motion="off"] .glyph-vessel .vlevel,
+  html[data-motion="off"] .glyph-vessel .vsurf { animation: none; }
+
+  /* ── Keyframes ────────────────────────────────────────── */
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes drawline { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  /* Stepped square — discrete jumps, no interpolation */
+  @keyframes sqstep {
+    0%   { transform: scale(1); }
+    22%  { transform: scale(1.045); }
+    44%  { transform: scale(1); }
+    66%  { transform: scale(0.985); }
+    100% { transform: scale(1); }
+  }
+  /* Stepped water level */
+  @keyframes vlevel {
+    0%   { transform: translateY(0); }
+    16%  { transform: translateY(9px); }
+    32%  { transform: translateY(-5px); }
+    50%  { transform: translateY(14px); }
+    68%  { transform: translateY(3px); }
+    84%  { transform: translateY(-3px); }
+    100% { transform: translateY(0); }
+  }
+  /* Stepped surface ripple */
+  @keyframes vripple {
+    0%   { transform: translateY(0); }
+    33%  { transform: translateY(1.6px); }
+    66%  { transform: translateY(-1.1px); }
+    100% { transform: translateY(0); }
+  }
+  /* prank keyframes */
+  @keyframes splash {
+    0%   { transform: translate(0, 0) scale(1); opacity: 0; }
+    12%  { opacity: 1; }
+    100% { transform: translate(var(--dx), var(--dy)) scale(.6); opacity: 0; }
+  }
+  @keyframes vanish {
+    0%   { transform: scale(1);    opacity: 0; }
+    14%  { opacity: .9; }
+    100% { transform: scale(0.02); opacity: 0; }
+  }
+  @keyframes bangpop {
+    0%   { transform: scaleY(0); }
+    100% { transform: scaleY(1); }
+  }
+
+  /* ── Responsive ───────────────────────────────────────── */
+  /* Stained-glass portrait under the name */
+  .portrait {
+    position: absolute;
+    top: clamp(80px, 13vh, 120px);
+    left: clamp(28px, 4.5vw, 62px);
+    width: clamp(135px, 13.5vw, 187px);
+    aspect-ratio: 4 / 5;
+    z-index: 3;
+    animation: fade 1400ms 320ms var(--ease) both;
+  }
+  .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+  @media (max-width: 860px) { .portrait { display: none; } }
+
+  .marks { z-index: 2; }
+
+  @media (max-width: 680px) {
+    .marks {
+      flex-wrap: wrap;
+      gap: 44px clamp(40px, 16vw, 80px);
+      align-content: center;
+      padding: 0 32px;
+    }
+    .mark { height: 156px; width: 116px; }
+    .horizon { display: none; }
+    .stamp { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glyph-square, .glyph-vessel .vlevel, .glyph-vessel .vsurf,
+    .horizon, .mark, .signature, .contact, .stamp { animation: none !important; }
+    .mark { opacity: 1; transform: none; }
+    .horizon { transform: scaleX(1); }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="stage">
+
+  <a class="signature" href="/" aria-label="Aakash Desai — home">aakash desai</a>
+
+  <div class="portrait">
+    <img src="/assets/img/portrait.jpg" alt="Aakash Desai" width="752" height="940" />
+  </div>
+
+  <nav class="marks" aria-label="Sections">
+
+    <!-- 1 · CV -->
+    <a class="mark" href="/cv/" aria-label="Curriculum vitae">
+      <div class="visual cvbox">
+        <div class="glyph-square"></div>
+        <div class="cv-vanish" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <span class="cap">CV</span>
+    </a>
+
+    <!-- 2 · Digital -->
+    <a class="mark" href="/digital/" aria-label="Digital products">
+      <div class="visual"><canvas class="grid-canvas" width="120" height="120"></canvas></div>
+      <span class="cap">digital</span>
+    </a>
+
+    <!-- 3 · Hardware -->
+    <a class="mark" href="/physical/" aria-label="Physical products">
+      <div class="visual">
+        <svg class="glyph-vessel" viewBox="0 0 108 132" aria-hidden="true">
+          <defs>
+            <clipPath id="bottleClip">
+              <rect x="30" y="26" width="48" height="92" rx="9" />
+              <rect x="46" y="10" width="16" height="18" rx="3" />
+            </clipPath>
+          </defs>
+          <g class="btip">
+            <g clip-path="url(#bottleClip)">
+              <g class="vlevel">
+                <rect class="vwater" x="18" y="74" width="72" height="84" />
+                <rect class="vsurf"  x="18" y="73" width="72" height="2.5" />
+              </g>
+            </g>
+            <rect class="vbody" x="30" y="26" width="48" height="92" rx="9" />
+            <rect class="vbody" x="46" y="10" width="16" height="18" rx="3" />
+            <g class="drops">
+              <circle class="drop" cx="54" cy="9"  r="2.2" style="--dx:69px;--dy:110px;--d:.70s;--delay:0s;fill:var(--c1)" />
+              <circle class="drop" cx="53" cy="10" r="1.8" style="--dx:57px;--dy:76px;--d:.62s;--delay:.08s;fill:var(--c3)" />
+              <circle class="drop" cx="55" cy="9"  r="2.0" style="--dx:80px;--dy:139px;--d:.82s;--delay:.04s;fill:var(--c2)" />
+              <circle class="drop" cx="54" cy="11" r="1.6" style="--dx:40px;--dy:57px;--d:.55s;--delay:.14s;fill:var(--c2)" />
+              <circle class="drop" cx="55" cy="10" r="2.4" style="--dx:74px;--dy:124px;--d:.78s;--delay:.10s;fill:var(--c1)" />
+              <circle class="drop" cx="53" cy="9"  r="1.7" style="--dx:62px;--dy:95px;--d:.68s;--delay:.18s;fill:var(--c3)" />
+              <circle class="drop" cx="54" cy="10" r="2.0" style="--dx:48px;--dy:67px;--d:.60s;--delay:.22s;fill:var(--c2)" />
+              <circle class="drop" cx="55" cy="11" r="1.9" style="--dx:76px;--dy:130px;--d:.80s;--delay:.06s;fill:var(--c1)" />
+              <circle class="drop" cx="54" cy="9"  r="1.5" style="--dx:53px;--dy:84px;--d:.64s;--delay:.26s;fill:var(--c3)" />
+              <circle class="drop" cx="53" cy="10" r="2.1" style="--dx:68px;--dy:108px;--d:.74s;--delay:.16s;fill:var(--c2)" />
+            </g>
+          </g>
+        </svg>
+      </div>
+      <span class="cap">physical</span>
+    </a>
+
+    <!-- 4 · Writing -->
+    <a class="mark" href="/writing/" aria-label="Writing">
+      <div class="visual">
+        <div class="glyph-dots"><i></i><i></i><i></i></div>
+        <div class="bang" aria-hidden="true"><span class="stem"></span><span class="pt"></span></div>
+      </div>
+      <span class="cap">writing</span>
+    </a>
+
+  </nav>
+
+  <a class="contact" href="mailto:aakash.desai@gmail.com">aakash.desai@gmail.com</a>
+  <span class="stamp">oakland</span>
+
+</div>
+
+
+<script>
+  // ── Digital field — static noise resolving into phenomena ──
+  (function () {
+    const canvas = document.querySelector('.grid-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const CSS = 120, N = 15, pad = 7;
+    const PAL = ['#e8692e', '#d2418a', '#eab12e'];   // desert tricolor, sprinkled subtly
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mark = canvas.closest('.mark');
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = CSS * dpr;
+      canvas.height = CSS * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    function colour() { return getComputedStyle(document.documentElement).getPropertyValue('--fg').trim() || '#222'; }
+    function frozen() { return reduce || document.documentElement.dataset.motion === 'off'; }
+
+    // deterministic per-cell-per-frame noise
+    function hash(i, j, k) {
+      let n = (i * 374761393) ^ (j * 668265263) ^ (k * 362437);
+      n = Math.imul(n ^ (n >>> 13), 1274126177); n = n ^ (n >>> 16);
+      return ((n >>> 0) % 100000) / 100000;
+    }
+    // a moving point + fading wake, sampled into the field
+    function trail(u, v, tau, pos, steps, w) {
+      let m = 0;
+      for (let k = 0; k < steps; k++) {
+        const s = tau - k * 0.06; if (s < 0) continue;
+        const p = pos(s); const d2 = (u - p[0]) ** 2 + (v - p[1]) ** 2;
+        m = Math.max(m, (1 - k * 0.16) * Math.exp(-d2 / w));
+      }
+      return m;
+    }
+
+    // ── named scenes — each returns intensity 0..1 over grid (u,v), tau 0..1
+    function fr(x) { return x - Math.floor(x); }
+    function distSeg(px, py, ax, ay, bx, by) {
+      const dx = bx - ax, dy = by - ay, L = dx * dx + dy * dy || 1e-6;
+      let t = ((px - ax) * dx + (py - ay) * dy) / L; t = Math.max(0, Math.min(1, t));
+      return Math.hypot(px - (ax + t * dx), py - (ay + t * dy));
+    }
+    function buildCracks() {
+      const out = [];
+      function branch(ax, ay, ang, len, t0, depth) {
+        const bx = ax + Math.cos(ang) * len, by = ay + Math.sin(ang) * len;
+        out.push({ ax, ay, bx, by, t0, dur: 0.12 });
+        if (depth <= 0 || len < 0.1) return;
+        const n = fr(Math.sin((ax + by) * 53.1) * 1000) > 0.4 ? 2 : 1;
+        for (let k = 0; k < n; k++) {
+          const da = (fr(Math.sin((ax * 7 + by * 3 + k * 11) * 1.7) * 1000) - 0.5) * 1.5;
+          branch(bx, by, ang + da, len * 0.68, t0 + 0.12, depth - 1);
+        }
+      }
+      for (let k = 0; k < 6; k++) branch(0.5, 0.5, (k / 6) * 6.283 + 0.3, 0.27, k * 0.02, 3);
+      return out;
+    }
+    const CRACKS = buildCracks();
+    function buildForest() {
+      const igx = Math.round(N * 0.5), igy = N - 2, c = new Array(N * N); let maxd = 0;
+      for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) { const d = Math.hypot(i - igx, j - igy); c[i * N + j] = d; if (d > maxd) maxd = d; }
+      for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) {
+        let base = c[i * N + j] / maxd;
+        if (fr(Math.sin(i * 13.1 + j * 7.7) * 1000) > 0.86) base *= 0.35;        // power-law long-range spark
+        base += (fr(Math.sin(i * 3.3 + j * 9.1) * 1000) - 0.5) * 0.12;           // ragged front
+        c[i * N + j] = Math.max(0, Math.min(0.95, base * 0.85 + 0.02));
+      }
+      return c;
+    }
+    const CATCH = buildForest();
+
+    const phenomena = [
+      // 1 · rainfall — streaks falling
+      (u, v, tau) => { const col = Math.round(u * (N - 1)); const o = fr(Math.sin(col * 12.9898) * 43758.5); if (o < 0.3) return 0; const sp = 0.8 + o * 0.7; const y = fr(tau * sp * 3 + o); const d = y - v; return d >= 0 && d < 0.22 ? 1 - d / 0.22 : 0; },
+      // 2 · lightning strikes — a jagged bolt in sharp flashes
+      (u, v, tau) => { const fl = Math.floor(tau * 4), seg = Math.floor(v * 5), tt = v * 5 - seg; const f0 = fr(Math.sin((seg + fl * 7) * 12.9) * 1000), f1 = fr(Math.sin((seg + 1 + fl * 7) * 12.9) * 1000); const bx = 0.5 + ((f0 - 0.5) * 0.7 * (1 - tt) + (f1 - 0.5) * 0.7 * tt); const near = Math.max(0, 1 - Math.abs(u - bx) * 11); let f = 0; for (const cc of [0.16, 0.4, 0.66, 0.86]) { const dt = (tau - cc) * 26; f = Math.max(f, Math.exp(-dt * dt)); } return Math.max(0.1 * (f > 0.3 ? 1 : 0), near * (f > 0.12 ? 1 : 0)); },
+      // 3 · wildfire — overhead forest, fire percolating tree to tree
+      (u, v, tau) => { const i = Math.round(u * (N - 1)), j = Math.round(v * (N - 1)); const ct = CATCH[i * N + j]; if (tau < ct) return 0.22; const since = tau - ct; if (since < 0.08) return 1; if (since < 0.2) return 0.55; return 0.12; },
+      // 4 · sunrise — a sun rising out of a horizon
+      (u, v, tau) => { const hor = 0.62, sy = hor + 0.30 - tau * 0.62, d = Math.hypot(u - 0.5, v - sy); const disc = (d < 0.16 && v < hor + 0.04) ? 1 : 0; const horizon = Math.abs(v - hor) < 0.04 ? 0.6 : 0; const ground = v > hor + 0.04 ? 0.08 : 0; return Math.max(disc, Math.max(horizon, ground)); },
+      // 5 · sunset — a sun setting below a horizon
+      (u, v, tau) => { const hor = 0.62, sy = hor - 0.32 + tau * 0.62, d = Math.hypot(u - 0.5, v - sy); const disc = (d < 0.16 && v < hor + 0.04) ? 1 : 0; const horizon = Math.abs(v - hor) < 0.04 ? 0.6 : 0; const ground = v > hor + 0.04 ? 0.08 : 0; return Math.max(disc, Math.max(horizon, ground)); },
+      // 6 · tidal wave — a swell sweeping across
+      (u, v, tau) => { const hump = 0.5 - 0.34 * Math.exp(-Math.pow((u - (tau * 1.35 - 0.18)) * 4.2, 2)); const water = v > hump ? 0.45 : 0; const crest = Math.abs(v - hump) < 0.085 ? 1 : 0; return Math.max(water, crest); },
+      // 7 · fractal cracks — a branching network spreading
+      (u, v, tau) => { let m = 0; for (const s of CRACKS) { if (s.t0 > tau) continue; const g = Math.min(1, (tau - s.t0) / s.dur); const ex = s.ax + (s.bx - s.ax) * g, ey = s.ay + (s.by - s.ay) * g; const dd = distSeg(u, v, s.ax, s.ay, ex, ey); if (dd < 0.045) m = Math.max(m, 1 - dd / 0.045); } return m; },
+    ];
+
+    // ── flashing STOP sign, shown on hover ──────────────────
+    const SIGN = {
+      S: ['111', '100', '111', '001', '111'],
+      T: ['111', '010', '010', '010', '010'],
+      O: ['111', '101', '101', '101', '111'],
+      P: ['111', '101', '111', '100', '100'],
+    }, WORD = ['S', 'T', 'O', 'P'];
+    function letterOn(i, j) {
+      const r = j - 5; if (r < 0 || r > 4) return false;
+      const li = Math.floor(i / 4), lc = i - li * 4;
+      if (li > 3 || lc > 2) return false;
+      return SIGN[WORD[li]][r][lc] === '1';
+    }
+    function stopCell(i, j, tick) {
+      const dx = i - 7, dy = j - 7, m = Math.max(Math.abs(dx), Math.abs(dy)), s = Math.abs(dx) + Math.abs(dy);
+      if (m > 7 || s > 10) return 0;
+      if (letterOn(i, j)) return 0.04;                 // letters punched out dark
+      const blink = Math.floor(tick / 4) % 2 === 0 ? 1 : 0.22;
+      return blink * (m >= 6 || s >= 9 ? 1 : 0.78);     // bright octagon field + border
+    }
+
+    const S = 1.0, IN = 0.8, HOLD = 3.6, OUT = 0.8, E = S + IN + HOLD + OUT;
+
+    function draw(tick) {
+      ctx.clearRect(0, 0, CSS, CSS);
+      const c = colour(), step = (CSS - pad * 2) / (N - 1);
+      let reveal, tau = 0, phen;
+      if (frozen()) { reveal = 1; tau = 0.4; phen = phenomena[3]; }
+      else {
+        const tt = tick * 0.09, epi = Math.floor(tt / E), local = tt - epi * E;
+        phen = phenomena[epi % phenomena.length];
+        if (local < S) { reveal = 0; }
+        else if (local < S + IN) { reveal = (local - S) / IN; }
+        else if (local < S + IN + HOLD) { reveal = 1; tau = (local - (S + IN)) / HOLD; }
+        else { reveal = 1 - (local - (S + IN + HOLD)) / OUT; tau = 1; }
+        reveal = Math.round(reveal * 5) / 5;             // stepped crossfade
+      }
+      const hov = mark && mark.matches(':hover');
+      const marquee = hov && !frozen();
+      for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) {
+        let inten;
+        if (marquee) {
+          inten = stopCell(i, j, tick);
+        } else {
+          const u = i / (N - 1), vv = j / (N - 1);
+          const nv = hash(i, j, tick); const noiseInt = nv > 0.42 ? nv : 0;
+          const fieldInt = reveal > 0 ? Math.max(0, Math.min(1, phen(u, vv, tau))) : 0;
+          inten = noiseInt * (1 - reveal) + fieldInt * reveal;
+        }
+        inten = Math.round(inten * 4) / 4;               // quantize → stepped
+        const a = inten <= 0 ? 0.05 : 0.10 + 0.80 * inten;
+        ctx.globalAlpha = a;
+        ctx.fillStyle = (inten > 0 && hash(i, j, 777) > 0.86) ? PAL[(hash(i, j, 555) * 3) | 0] : c;
+        ctx.beginPath(); ctx.arc(pad + i * step, pad + j * step, 1.7, 0, 6.2832); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    let raf, lastTick = -1;
+    function loop(t) {
+      const tick = Math.floor(t / 90);                   // ~11fps, stepped
+      if (tick !== lastTick) { draw(tick); lastTick = tick; }
+      if (!frozen()) raf = requestAnimationFrame(loop);
+    }
+    window.addEventListener('resize', () => { resize(); draw(lastTick < 0 ? 0 : lastTick); });
+    new MutationObserver(() => { cancelAnimationFrame(raf); lastTick = -1; loop(performance.now()); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-ground', 'data-type', 'data-motion'] });
+    loop(performance.now());
+  })();
+
+  // ── Ellipsis — chaotic human typing cadence ───────────────
+  (function () {
+    const wrap = document.querySelector('.glyph-dots');
+    if (!wrap) return;
+    const dots = Array.prototype.slice.call(wrap.querySelectorAll('i'));
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let n = 0, timer = null;
+
+    function render() { dots.forEach((d, i) => d.classList.toggle('on', i < n)); }
+    function still() { return reduce || document.documentElement.dataset.type === undefined ? reduce : (reduce || document.documentElement.dataset.motion === 'off'); }
+    function frozen() { return reduce || document.documentElement.dataset.motion === 'off'; }
+    function rand(a, b) { return a + Math.random() * (b - a); }
+
+    function tick() {
+      if (frozen()) { n = 3; render(); return; }
+      const r = Math.random();
+      if (n >= 3) {
+        // a full "word" — pause, then clear (space / newline) or backspace one
+        n = r < 0.62 ? 0 : 2;
+        render();
+        timer = setTimeout(tick, rand(420, 1150));   // pause between words
+        return;
+      }
+      if (r < 0.80) {
+        // type a key — bursts of quick inputs, occasional slower one
+        n++; render();
+        timer = setTimeout(tick, Math.random() < 0.68 ? rand(55, 145) : rand(180, 380));
+      } else {
+        // hesitation — pause mid-word
+        timer = setTimeout(tick, rand(280, 760));
+      }
+    }
+
+    render(); tick();
+    new MutationObserver(() => {
+      clearTimeout(timer);
+      if (frozen()) { n = 3; render(); } else { tick(); }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-motion'] });
+  })();
+</script>
+
+</body>
+</html>

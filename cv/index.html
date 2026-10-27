@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en" data-ground="white" data-type="grotesk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aakash Desai — CV</title>
+<meta name="description" content="Curriculum vitae — Aakash Desai, product manager & engineer." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<script>
+  // Inherit the portal's ground + typeface so the two pages feel like one hand.
+  try {
+    var s = JSON.parse(localStorage.getItem('aakash:portal') || '{}');
+    if (s.ground) document.documentElement.dataset.ground = s.ground;
+    if (s.type)   document.documentElement.dataset.type   = s.type;
+  } catch (e) {}
+</script>
+
+<style>
+  :root { --ease: cubic-bezier(0.22, 1, 0.36, 1); }
+
+  html[data-type="grotesk"] { --ff: 'Public Sans', system-ui, -apple-system, sans-serif; --ff-w: 400; --ff-wb: 700; }
+  html[data-type="courier"] { --ff: 'Courier Prime', ui-monospace, Menlo, monospace;     --ff-w: 400; --ff-wb: 700; }
+  html[data-type="plex"]    { --ff: 'IBM Plex Mono', ui-monospace, Menlo, monospace;      --ff-w: 400; --ff-wb: 600; }
+
+  html[data-ground="black"] { --bg: #0a0a0a; --fg: #ece9e1; --dim: #797568; --hair: rgba(236,233,225,0.16); --faint: rgba(236,233,225,0.06); }
+  html[data-ground="white"] { --bg: #faf8f2; --fg: #16140f; --dim: #847f73; --hair: rgba(22,20,15,0.16); --faint: rgba(22,20,15,0.04); }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font-family: var(--ff);
+    font-weight: var(--ff-w);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .sheet {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: clamp(40px, 7vh, 88px) clamp(28px, 6vw, 80px) clamp(60px, 10vh, 120px);
+  }
+
+  /* ── Masthead ─────────────────────────────────────────── */
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: clamp(36px, 6vh, 64px);
+  }
+  .back {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: lowercase;
+    color: var(--dim);
+    transition: color 160ms var(--ease);
+  }
+  .back:hover { color: var(--fg); }
+  .place { font-size: 12px; letter-spacing: 0.14em; text-transform: lowercase; color: var(--dim); }
+
+  .name {
+    font-size: clamp(34px, 5.4vw, 60px);
+    font-weight: var(--ff-wb);
+    letter-spacing: 0.02em;
+    text-transform: lowercase;
+    line-height: 1;
+    margin: 0;
+  }
+  .role {
+    margin: 14px 0 0;
+    font-size: clamp(15px, 1.6vw, 18px);
+    color: var(--fg);
+  }
+  .contacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 22px;
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--dim);
+  }
+  .contacts a { border-bottom: 1px solid var(--hair); padding-bottom: 1px; transition: color 160ms var(--ease), border-color 160ms var(--ease); }
+  .contacts a:hover { color: var(--fg); border-color: var(--fg); }
+
+  .lede {
+    margin: clamp(30px, 5vh, 52px) 0 0;
+    font-size: clamp(18px, 2vw, 23px);
+    line-height: 1.5;
+    font-weight: var(--ff-w);
+    max-width: 44ch;
+    text-wrap: pretty;
+  }
+
+  /* ── Sections ─────────────────────────────────────────── */
+  .section { margin-top: clamp(40px, 6vh, 68px); }
+  .section > .label {
+    font-size: 11.5px;
+    letter-spacing: 0.22em;
+    text-transform: lowercase;
+    color: var(--dim);
+    font-weight: var(--ff-wb);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--hair);
+    margin-bottom: 26px;
+  }
+
+  /* entry: meta rail + body */
+  .entry {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 8px 28px;
+    padding: 4px 0 24px;
+  }
+  .entry + .entry { border-top: 1px solid var(--faint); padding-top: 22px; }
+  .entry .meta { font-size: 12.5px; color: var(--dim); letter-spacing: 0.02em; }
+  .entry .meta .ph { color: var(--dim); }
+  .entry h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: var(--ff-wb);
+    letter-spacing: 0.01em;
+  }
+  .entry .org { margin: 2px 0 0; font-size: 14px; color: var(--fg); }
+  .entry p { margin: 10px 0 0; color: var(--fg); max-width: 60ch; text-wrap: pretty; }
+  .entry ul { margin: 10px 0 0; padding-left: 18px; color: var(--fg); max-width: 60ch; }
+  .entry li { margin: 4px 0; }
+  .entry .tag { color: var(--dim); font-size: 13px; }
+
+  /* placeholder pill */
+  .ph {
+    display: inline-block;
+    color: var(--dim);
+    background: var(--faint);
+    border: 1px dashed var(--hair);
+    border-radius: 2px;
+    padding: 0 7px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  /* two-column simple lists (skills) */
+  .cols { columns: 2; column-gap: 40px; max-width: 620px; }
+  .cols .row { break-inside: avoid; padding: 5px 0; border-bottom: 1px solid var(--faint); display: flex; justify-content: space-between; gap: 16px; }
+  .cols .row span:last-child { color: var(--dim); font-size: 13px; }
+
+  .colophon {
+    margin-top: clamp(48px, 8vh, 90px);
+    padding-top: 18px;
+    border-top: 1px solid var(--hair);
+    font-size: 12px;
+    color: var(--dim);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  @media (max-width: 600px) {
+    .entry { grid-template-columns: 1fr; gap: 4px; }
+    .entry .meta { order: 2; margin-top: 4px; }
+    .cols { columns: 1; }
+    .top { flex-direction: column; gap: 6px; }
+  }
+
+  @media print {
+    @page { margin: 16mm; }
+    html, body { background: #fff; color: #111; }
+    .back { display: none; }
+    .section, .entry { break-inside: avoid; }
+  }
+
+  :focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+</style>
+</head>
+
+<body>
+<main class="sheet">
+
+  <div class="top">
+    <a class="back" href="/">&larr; back</a>
+    <span class="place">oakland, ca &middot; updated october 2026</span>
+  </div>
+
+  <header>
+    <h1 class="name">aakash desai</h1>
+    <p class="role">product manager <span style="color:var(--dim)">&amp;</span> engineer</p>
+    <nav class="contacts" aria-label="Contact">
+      <a href="mailto:aakash.desai@gmail.com">aakash.desai@gmail.com</a>
+      <a href="https://www.linkedin.com/in/aakashdesai" target="_blank" rel="noopener noreferrer">linkedin / aakashdesai</a>
+      <a href="https://github.com/AakashAmorce" target="_blank" rel="noopener noreferrer">github / AakashAmorce</a>
+      <a href="https://www.inourdark.com" target="_blank" rel="noopener noreferrer">inourdark.com</a>
+    </nav>
+  </header>
+
+  <p class="lede">
+    I design and build systems that turn messy, real-world problems
+    into clear, human-centered products.
+  </p>
+
+  <!-- Experience -->
+  <section class="section">
+    <p class="label">experience</p>
+
+    <div class="entry">
+      <div class="meta">jun 2024 &mdash; present<br />oakland, ca</div>
+      <div>
+        <h3>Founder</h3>
+        <p class="org">Breakstep Group</p>
+        <p>A software studio building data and tracking tools for clients and for its own products.</p>
+        <ul>
+          <li><strong>Limnal Research</strong> &mdash; a live subscription product for investors: six quantitative models score the macro regime daily, run on 20 scheduled jobs. Traced silently missing model runs to the scheduler dying when the server scaled to zero; moved scheduling to GitHub Actions and added a catch-up job that backfills gaps without duplicates.</li>
+          <li><strong>TPO Watch</strong> &mdash; keeps tenant-protection law tables current across 110 jurisdictions for a Bay Area legal services organization. A daily watcher flags changes, Claude drafts each update with a citation and verbatim quote, and an analyst approves it.</li>
+        </ul>
+        <p class="tag">product &middot; requirements &middot; data pipelines &middot; Next.js, Supabase, FastAPI, GitHub Actions, Claude API</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="meta">dec 2020 &mdash; jul 2024<br />emeryville, ca</div>
+      <div>
+        <h3>Product Manager III &mdash; Physical Products</h3>
+        <p class="org">Ginkgo Bioworks</p>
+        <ul>
+          <li>Took five biosecurity products through concept, prototype, field trials, and production, including aircraft wastewater collection devices deployed at SFO, Boston Logan, and JFK, and pathogen-surveillance field kits shipped to Ukraine.</li>
+          <li>Ran R&amp;D and engineering on the triturator collection device (v1 at SFO and Logan, v2 at JFK) and designed the device disinfection station.</li>
+          <li>Ran failure analysis on field failures; the field failure rate fell from about 2% to 0.1% in six months.</li>
+          <li>Owned BOMs, materials forecasting, procurement, and production tracking for seven product lines &mdash; thousands of school kits and hundreds of wastewater devices across dozens of vendors.</li>
+        </ul>
+        <p class="tag">hardware product &middot; R&amp;D &middot; procurement &middot; manufacturing &middot; field deployment</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="meta">2022 &mdash; present</div>
+      <div>
+        <h3>Co-founder</h3>
+        <p class="org">Keys to the City</p>
+        <p>An Oakland instrument lending library and performance series &mdash; 500+ attendees across shows. Restored five of its Rhodes and Wurlitzer electric pianos.</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="meta">jul 2020 &mdash; jun 2022</div>
+      <div>
+        <h3>Lecturer, Fung Fellowship</h3>
+        <p class="org">UC Berkeley</p>
+        <p>Designed and taught a project-based design course for cohorts of about 50.</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="meta">nov 2019 &mdash; dec 2020</div>
+      <div>
+        <h3>Experience &amp; Interaction PM</h3>
+        <p class="org">Lawrence Hall of Science</p>
+        <p>Prototyped hardware exhibits and wrote their SOPs.</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="meta">2014 &mdash; 2019</div>
+      <div>
+        <h3>STEAM Program Chair &amp; Technology Lead &middot; Physics &amp; Engineering Teacher</h3>
+        <p class="org">Civicorps (2016&ndash;2019) &middot; Oakland High School, OUSD (2014&ndash;2016)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Selected hardware -->
+  <section class="section">
+    <p class="label">selected work &middot; hardware</p>
+    <div class="entry">
+      <div class="meta">biosecurity, airports</div>
+      <div>
+        <p>Devices designed, built, and deployed at international airports during the pandemic response:</p>
+        <ul>
+          <li>Aircraft wastewater collection devices &mdash; v1 &amp; v2</li>
+          <li>Triturator collection devices &mdash; v1 &amp; v2</li>
+          <li>Device disinfection stations</li>
+          <li>Passive collection device for low-resource settings</li>
+        </ul>
+        <p class="tag">deployed at SFO &middot; Boston Logan &middot; JFK &middot; <a href="/physical/" style="border-bottom:1px solid var(--hair)">photos &rarr;</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Selected digital -->
+  <section class="section">
+    <p class="label">selected work &middot; software</p>
+
+    <div class="entry">
+      <div class="meta">live</div>
+      <div>
+        <h3>Limnal Research</h3>
+        <p class="org"><a href="https://www.limnalresearch.com" target="_blank" rel="noopener noreferrer">limnalresearch.com</a></p>
+        <p>Daily macro-regime monitoring for active investors.</p>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="meta">live</div>
+      <div>
+        <h3>Rent Facts</h3>
+        <p class="org"><a href="https://www.rentfacts.io" target="_blank" rel="noopener noreferrer">rentfacts.io</a></p>
+        <p>Verified tenant reviews of rental properties, starting with 3,379 Oakland buildings.</p>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="meta">demo</div>
+      <div>
+        <h3>Lineup</h3>
+        <p class="org"><a href="https://lineup-pied.vercel.app" target="_blank" rel="noopener noreferrer">lineup-pied.vercel.app</a></p>
+        <p>A marketplace for social-impact organizations to find and work with influencers and journalists.</p>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="meta">in development</div>
+      <div>
+        <h3>Ultra Contracts</h3>
+        <p>A paper prediction market where any contract can be created &mdash; a work of conceptual art.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section class="section">
+    <p class="label">education</p>
+    <div class="entry">
+      <div class="meta">2013</div>
+      <div>
+        <h3>M.S., Environmental Science, Policy and Management</h3>
+        <p class="org">University of California, Berkeley</p>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="meta">2010</div>
+      <div>
+        <h3>M.S., Environmental Engineering</h3>
+        <p class="org">University of California, Berkeley</p>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="meta">2009</div>
+      <div>
+        <h3>B.S., Mechanical Engineering</h3>
+        <p class="org">University of California, Irvine</p>
+        <p class="tag">minors in Global Sustainability and Earth System Science</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Capabilities -->
+  <section class="section">
+    <p class="label">capabilities</p>
+    <div class="cols">
+      <div class="row"><span>Product management</span><span>0&ndash;1, requirements, delivery</span></div>
+      <div class="row"><span>Hardware programs</span><span>concept &rarr; production</span></div>
+      <div class="row"><span>Supply chain</span><span>BOMs, forecasting, procurement</span></div>
+      <div class="row"><span>Quality</span><span>failure analysis, test rigs</span></div>
+      <div class="row"><span>Software product</span><span>Next.js, Python, Supabase</span></div>
+      <div class="row"><span>Data</span><span>SQL, Postgres, pipelines</span></div>
+      <div class="row"><span>Teaching</span><span>design, physics, engineering</span></div>
+      <div class="row"><span>Writing</span><span>InOurDark</span></div>
+    </div>
+  </section>
+
+  <div class="colophon">
+    <span>The long-form CV (Google Doc) is
+      <a href="https://docs.google.com/document/d/17naVQvGGlV68oIfI0kkOf5EUaMingjWQwKDSWBRikzE/edit?usp=sharing" target="_blank" rel="noopener noreferrer" style="border-bottom:1px solid var(--hair)">here &#8599;</a>.
+    </span>
+    <span>&copy; 2026 Aakash Desai</span>
+  </div>
+
+</main>
+</body>
+</html>
