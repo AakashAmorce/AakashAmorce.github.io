@@ -18,6 +18,46 @@
     if (s.ground)    document.documentElement.dataset.ground    = s.ground;
     if (s.type)      document.documentElement.dataset.type      = s.type;
   } catch (e) {}
+
+  // ── Ellipsis — chaotic human typing cadence ───────────────
+  (function () {
+    const wrap = document.querySelector('.glyph-dots');
+    if (!wrap) return;
+    const dots = Array.prototype.slice.call(wrap.querySelectorAll('i'));
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let n = 0, timer = null;
+
+    function render() { dots.forEach((d, i) => d.classList.toggle('on', i < n)); }
+    function still() { return reduce || document.documentElement.dataset.type === undefined ? reduce : (reduce || document.documentElement.dataset.motion === 'off'); }
+    function frozen() { return reduce || document.documentElement.dataset.motion === 'off'; }
+    function rand(a, b) { return a + Math.random() * (b - a); }
+
+    function tick() {
+      if (frozen()) { n = 3; render(); return; }
+      const r = Math.random();
+      if (n >= 3) {
+        // a full "word" — pause, then clear (space / newline) or backspace one
+        n = r < 0.62 ? 0 : 2;
+        render();
+        timer = setTimeout(tick, rand(420, 1150));   // pause between words
+        return;
+      }
+      if (r < 0.80) {
+        // type a key — bursts of quick inputs, occasional slower one
+        n++; render();
+        timer = setTimeout(tick, Math.random() < 0.68 ? rand(55, 145) : rand(180, 380));
+      } else {
+        // hesitation — pause mid-word
+        timer = setTimeout(tick, rand(280, 760));
+      }
+    }
+
+    render(); tick();
+    new MutationObserver(() => {
+      clearTimeout(timer);
+      if (frozen()) { n = 3; render(); } else { tick(); }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-motion'] });
+  })();
 </script>
 
 <style>
@@ -219,7 +259,7 @@
   .mark:hover .glyph-vessel .vsurf  { animation: none; opacity: 0; }
   .mark:hover .glyph-vessel .drop   { animation: splash var(--d, .7s) steps(5, end) infinite; animation-delay: var(--delay, 0s); }
 
-  /* ── 4 · Ellipsis (writing) — JS typing cadence ───────── */
+  /* ── 4 · Ellipsis (hobbies) — JS typing cadence ───────── */
   .glyph-dots {
     display: flex;
     align-items: center;
@@ -253,10 +293,9 @@
   .mark:hover .cvbox .glyph-square { opacity: 0; }
   .mark:hover .cv-vanish { display: block; }
 
-  /* prank — ellipsis snaps to an exclamation point */
+  /* prank — ellipsis snaps to a question mark */
   .bang { display: none; flex-direction: column; align-items: center; gap: 9px; height: 96px; justify-content: center; }
-  .bang .stem { width: 15px; height: 46px; border-radius: 7.5px; background: var(--fg); transform-origin: bottom center; animation: bangpop .3s steps(3, end); }
-  .bang .pt { width: 15px; height: 15px; border-radius: 50%; background: var(--fg); }
+  .bang .q { font-size: 104px; font-weight: 700; line-height: 1; color: var(--fg); transform-origin: bottom center; animation: bangpop .3s steps(3, end); }
   .mark:hover .glyph-dots { display: none; }
   .mark:hover .bang { display: flex; }
 
@@ -412,6 +451,15 @@
         </svg>
       </div>
       <span class="cap">physical</span>
+    </a>
+
+    <!-- 4 · Hobbies -->
+    <a class="mark" href="/hobbies/" aria-label="Hobbies">
+      <div class="visual">
+        <div class="glyph-dots"><i></i><i></i><i></i></div>
+        <div class="bang" aria-hidden="true"><span class="q">?</span></div>
+      </div>
+      <span class="cap">hobbies</span>
     </a>
 
   </nav>

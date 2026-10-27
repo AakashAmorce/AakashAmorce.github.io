@@ -155,3 +155,17 @@ a.product:hover .parrow { transform: translateX(4px); color: var(--fg); }
 }
 
 :focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+
+/* ── Hobbies list ─────────────────────────────────────── */
+.hobbies { list-style: none; margin: 0; padding: 0; counter-reset: h; }
+.hobbies li {
+  counter-increment: h;
+  display: grid; grid-template-columns: 56px 1fr; align-items: baseline;
+  padding: 14px 0; border-top: 1px solid var(--faint);
+  font-size: clamp(20px, 2.6vw, 30px); font-weight: var(--ff-wb); letter-spacing: 0.01em; line-height: 1.2;
+}
+.hobbies li:first-child { border-top: none; }
+.hobbies li::before { content: counter(h, decimal-leading-zero); font-size: 12px; font-weight: var(--ff-w); letter-spacing: 0.1em; color: var(--dim); }
+.tally { margin-top: 28px; font-size: 15px; color: var(--dim); }
+.tally a { color: var(--fg); border-bottom: 1px solid var(--hair); }
+.tally a:hover { border-color: var(--fg); }
