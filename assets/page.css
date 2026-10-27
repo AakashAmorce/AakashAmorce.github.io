@@ -104,10 +104,17 @@ a.product:hover { padding-left: 10px; }
 .parrow { color: var(--dim); font-size: 18px; align-self: center; transition: transform 200ms var(--ease); }
 a.product:hover .parrow { transform: translateX(4px); color: var(--fg); }
 
-/* ── Thumbs (physical) — fillable image slots ─────────── */
-.thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 6px; }
-.thumb img { width: 100%; aspect-ratio: 4 / 3; display: block; object-fit: cover; background: #fff; }
-.thumb .cap2 { font-size: 11px; color: var(--dim); margin-top: 7px; letter-spacing: 0.02em; }
+/* ── Stats row (physical) ─────────────────────────────── */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: clamp(36px, 5vh, 56px); padding: 22px 0; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+.stats b { display: block; font-size: clamp(24px, 3vw, 34px); font-weight: var(--ff-wb); line-height: 1.1; letter-spacing: 0.01em; white-space: nowrap; }
+.stats span { display: block; margin-top: 6px; font-size: 12.5px; color: var(--dim); line-height: 1.45; }
+
+/* ── Device gallery (physical) ────────────────────────── */
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+.gallery a { display: block; }
+.gallery img { width: 100%; aspect-ratio: 4 / 3; display: block; object-fit: cover; background: #fff; border: 1px solid var(--faint); transition: opacity 160ms var(--ease); }
+.gallery img.render { object-fit: contain; padding: 6px; }
+.gallery a:hover img { opacity: 0.86; }
 
 /* ── Placeholder pill ─────────────────────────────────── */
 .ph {
@@ -135,7 +142,8 @@ a.product:hover .parrow { transform: translateX(4px); color: var(--fg); }
 @media (max-width: 600px) {
   .entry { grid-template-columns: 1fr; gap: 4px; }
   .entry .meta { order: 2; margin-top: 4px; }
-  .thumbs { grid-template-columns: repeat(2, 1fr); }
+  .gallery { grid-template-columns: repeat(2, 1fr); }
+  .stats { grid-template-columns: repeat(2, 1fr); }
   .top { flex-direction: column; gap: 6px; }
 }
 
